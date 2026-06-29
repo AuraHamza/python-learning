@@ -1,4 +1,3 @@
-a=20
-b=22
-
-print("Sum of two numbers is:",a+b)
+a=int(input("Enter first number: "))
+b=int(input("Enter second number: "))
+print("Sum of two number is:", a+b)
