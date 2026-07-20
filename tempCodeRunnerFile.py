@@ -1,0 +1,18 @@
+#Negative Listing 
+numbers = [10, 20, 30, 40, 50]
+
+print(numbers[-1])
+print(numbers[-2])
+
+#Positive Listing
+print("\n")
+numbers = [10, 20, 30, 40, 50]
+
+print(numbers[1])
+print(numbers[2])
+
+print("\nNumber Through Loop")
+a = [10,20,30,40,50]
+
+for b in a:
+    print(b)
