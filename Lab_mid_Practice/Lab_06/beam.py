@@ -49,6 +49,7 @@ def beam_search(start,goal,beam_width):
                 h=heuristic[neighbour]
 
                 canditate.append((neighbour,new_cost,new_path,h))
+                
         if not canditate:
             break
 

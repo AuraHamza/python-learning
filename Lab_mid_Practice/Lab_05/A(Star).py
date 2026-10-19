@@ -50,3 +50,105 @@ def a_star(graph,start,goal,heuristic):
 
 
 a_star(graph, 'A', 'G', heuristic)
+
+maze = [
+    ['S', '.', '.', '#'],
+    ['.', '.', 'E', '.'],
+    ['.', '.', '.', '#'],
+    ['.', '#', '.', '.']
+]
+
+direction = [
+    (-1, 0),
+    (1, 0),
+    (0, -1),
+    (0, 1)
+]
+
+graph = {}
+
+
+def create_graph(maze):
+    for i in range(len(maze)):
+        for j in range(len(maze[0])):
+
+            if maze[i][j] != '#':
+
+                neighbour = []
+
+                for dx, dy in direction:
+                    x = i + dx
+                    y = j + dy
+
+                    if 0 <= x < len(maze) and 0 <= y < len(maze[0]):
+                        if maze[x][y] != '#':
+                            neighbour.append((x, y))
+
+                graph[(i, j)] = neighbour
+
+    return graph
+
+
+def heuristic(point, goal):
+    x1, y1 = point
+    x2, y2 = goal
+
+    return abs(x1 - x2) + abs(y1 - y2)
+
+
+def a_star(graph, start, goal):
+    frontier = [(start, 0, [start])]
+    g_cost = {start: 0}
+    visited = set()
+
+    while frontier:
+
+        frontier.sort(key=lambda x: x[1])
+
+        node, f, path = frontier.pop(0)
+
+        if node in visited:
+            continue
+
+        visited.add(node)
+
+        g = g_cost[node]
+        h = heuristic(node, goal)
+
+        print(node, "g =", g, "h =", h, "f =", f)
+
+        if node == goal:
+            print("Goal Found")
+            print("Path:", path)
+            print("Total Steps:", len(path) - 1)
+            print("Total Cost:", g)
+            return
+
+        for neighbour in graph[node]:
+
+            new_g = g + 1
+
+            if neighbour not in g_cost or new_g < g_cost[neighbour]:
+
+                g_cost[neighbour] = new_g
+
+                new_f = new_g + heuristic(neighbour, goal)
+
+                new_path = path + [neighbour]
+
+                frontier.append((neighbour, new_f, new_path))
+
+    print("Not Found")
+
+
+def main():
+
+    create_graph(maze)
+
+    start = (0, 0)
+    goal = (1, 2)
+
+    a_star(graph, start, goal)
+
+
+main()
